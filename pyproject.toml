@@ -1,0 +1,48 @@
+[build-system]
+requires = ['setuptools>=77']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'runrist'
+description = 'A live, Python-extensible terminal text editor in the Emacs tradition, for the Silkie terminal.'
+authors = [{name = 'Adam DePrince'}]
+license = 'GPL-3.0-or-later'
+license-files = ['COPYING']
+readme = 'README.md'
+requires-python = '>=3.12'
+dependencies = ['hamingjur>=0.1.1']
+dynamic = ['version']
+keywords = ['editor', 'emacs', 'terminal', 'silkie', 'kitty']
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Environment :: Console',
+    'Intended Audience :: Developers',
+    'Operating System :: POSIX',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
+    'Programming Language :: Python :: 3.15',
+    'Topic :: Text Editors',
+    'Topic :: Text Editors :: Emacs',
+]
+
+[project.urls]
+Homepage = 'https://github.com/adamdeprince/runrist'
+Source = 'https://github.com/adamdeprince/runrist'
+Issues = 'https://github.com/adamdeprince/runrist/issues'
+
+[project.scripts]
+runrist = 'runrist.main:main'
+
+[tool.setuptools.packages.find]
+include = ['runrist*']
+
+[tool.setuptools.package-data]
+runrist = ['modes/data/*.json']
+
+[tool.setuptools.dynamic]
+version = {attr = 'runrist.__version__'}
+
+[tool.pytest.ini_options]
+testpaths = ['tests']
+addopts = '-q'

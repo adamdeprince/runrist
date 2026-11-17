@@ -1,0 +1,595 @@
+{
+ "asm-mode": {
+  "title": "Assembler",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.[Ss]\\Z",
+   "\\.asm\\Z"
+  ],
+  "interpreters": [],
+  "source": "asm-mode",
+  "emacs": "31.1"
+ },
+ "autoconf-mode": {
+  "title": "Autoconf",
+  "parent": "prog-mode",
+  "auto": [
+   "(acinclude|aclocal|acsite)\\.m4\\Z",
+   "configure\\.(ac|in)\\Z"
+  ],
+  "interpreters": [],
+  "source": "autoconf",
+  "emacs": "31.1"
+ },
+ "awk-mode": {
+  "title": "AWK//l",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.awk\\Z"
+  ],
+  "interpreters": [
+   "gawk",
+   "nawk",
+   "mawk",
+   "awk"
+  ],
+  "source": "cc-mode",
+  "emacs": "31.1"
+ },
+ "bat-mode": {
+  "title": "Bat",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.(bat|cmd)\\Z"
+  ],
+  "interpreters": [],
+  "source": "bat-mode",
+  "emacs": "31.1"
+ },
+ "bibtex-mode": {
+  "title": "BibTeX",
+  "parent": "fundamental-mode",
+  "auto": [
+   "\\.bib\\Z"
+  ],
+  "interpreters": [],
+  "source": "bibtex",
+  "emacs": "31.1"
+ },
+ "change-log-mode": {
+  "title": "Change Log",
+  "parent": "text-mode",
+  "auto": [
+   "[Cc]hange\\.?[Ll]og?\\Z",
+   "[Cc]hange[Ll]og[\\-.][0-9]+\\Z",
+   "\\$CHANGE_LOG\\$\\.TXT",
+   "[Cc]hange[Ll]og[\\-.][\\-0-9a-z]+\\Z"
+  ],
+  "interpreters": [],
+  "source": "add-log",
+  "emacs": "31.1"
+ },
+ "conf-colon-mode": {
+  "title": "Conf[Colon]",
+  "parent": "conf-unix-mode",
+  "auto": [
+   "/X11.+locale/.+/Compose\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "conf-desktop-mode": {
+  "title": "Conf[Desktop]",
+  "parent": "conf-unix-mode",
+  "auto": [
+   "\\.desktop\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "conf-javaprop-mode": {
+  "title": "Conf[JavaProp]",
+  "parent": "conf-mode",
+  "auto": [
+   "java.+\\.conf\\Z",
+   "\\.properties(?:\\.[\\-.0-9A-Z_a-z]+)?\\Z",
+   "/X11.+locale/compose\\.dir\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "conf-mode": {
+  "title": "Conf[?]",
+  "parent": "fundamental-mode",
+  "auto": [
+   "/(?:Pipfile|\\.?flake8)\\Z",
+   "\\.(?:[Ii][Nn][Ii]|[Ll][Ss][Tt]|[Rr][Ee][Gg]|[Ss][Yy][Ss])\\Z",
+   "\\A/etc/(?:acpid?/.+|aliases(?:\\.d/.+)?|default/.+|group\\-?|hosts\\..+|inittab|ksysguarddrc|opera6rc|passwd\\-?|shadow\\-?|sysconfig/.+)\\Z",
+   "/\\.?(?:gitconfig|gnokiirc|hgrc|kde.*rc|mime\\.types|wgetrc)\\Z",
+   "/\\.(?:asound|enigma|fetchmail|gltron|gtk|hxplayer|mairix|mbsync|msmtp|net|neverball|nvidia\\-settings\\-|offlineimap|qt/.+|realplayer|reportbug|rtorrent\\.|screen|scummvm|sversion|sylpheed/.+|xmp)rc\\Z",
+   "/\\.(?:gdbtkinit|grip|mpdconf|notmuch\\-config|orbital/.+txt|rhosts|tuxracer/options)\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "conf-space-mode": {
+  "title": "Conf[Space]",
+  "parent": "conf-unix-mode",
+  "auto": [
+   "\\A/etc/(?:DIR_COLORS|ethers|.?fstab|.*hosts|lesskey|login\\.?de(?:fs|vperm)|magic|mtab|pam\\.d/.*|permissions(?:\\.d/.+)?|protocols|rpc|services)\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "conf-toml-mode": {
+  "title": "Conf[TOML]",
+  "parent": "conf-mode",
+  "auto": [
+   "\\.toml\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "conf-unix-mode": {
+  "title": "Conf[Unix]",
+  "parent": "conf-mode",
+  "auto": [
+   "\\.la\\Z",
+   "/\\.mailmap\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "conf-windows-mode": {
+  "title": "Conf[WinIni]",
+  "parent": "conf-mode",
+  "auto": [
+   "/\\.redshift\\.conf\\Z"
+  ],
+  "interpreters": [],
+  "source": "conf-mode",
+  "emacs": "31.1"
+ },
+ "css-mode": {
+  "title": "CSS",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.css\\Z"
+  ],
+  "interpreters": [],
+  "source": "css-mode",
+  "emacs": "31.1"
+ },
+ "diff-mode": {
+  "title": "Diff",
+  "parent": "fundamental-mode",
+  "auto": [
+   "\\.(diffs?|patch|rej)\\Z",
+   "\\.(dif|pat)\\Z"
+  ],
+  "interpreters": [],
+  "source": "diff-mode",
+  "emacs": "31.1"
+ },
+ "dns-mode": {
+  "title": "DNS",
+  "parent": "text-mode",
+  "auto": [
+   "\\.zone\\Z",
+   "\\.soa\\Z"
+  ],
+  "interpreters": [],
+  "source": "dns-mode",
+  "emacs": "31.1"
+ },
+ "emacs-lisp-mode": {
+  "title": "Emacs Lisp",
+  "parent": "lisp-data-mode",
+  "auto": [
+   "\\.el\\Z",
+   "Project\\.ede\\Z",
+   "[/:\\\\]\\..*(emacs|gnus|viper)\\Z",
+   "\\A\\..*emacs\\Z",
+   "[/:]_emacs\\Z"
+  ],
+  "interpreters": [
+   "emacs"
+  ],
+  "source": "elisp-mode",
+  "emacs": "31.1"
+ },
+ "f90-mode": {
+  "title": "F90",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.f9[05]\\Z",
+   "\\.f0[38]\\Z"
+  ],
+  "interpreters": [],
+  "source": "f90",
+  "emacs": "31.1"
+ },
+ "fortran-mode": {
+  "title": "Fortran",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.[Ff]\\Z",
+   "\\.for\\Z"
+  ],
+  "interpreters": [],
+  "source": "fortran",
+  "emacs": "31.1"
+ },
+ "html-mode": {
+  "title": "Html",
+  "parent": "sgml-mode",
+  "auto": [],
+  "interpreters": [],
+  "source": "sgml-mode",
+  "emacs": "31.1"
+ },
+ "js-json-mode": {
+  "title": "Js Json",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.json\\Z"
+  ],
+  "interpreters": [],
+  "source": "js",
+  "emacs": "31.1"
+ },
+ "js-mode": {
+  "title": "Js",
+  "parent": "prog-mode",
+  "auto": [],
+  "interpreters": [
+   "rhino",
+   "gjs",
+   "nodejs",
+   "node"
+  ],
+  "source": "js",
+  "emacs": "31.1"
+ },
+ "latex-mode": {
+  "title": "LaTeX",
+  "parent": "text-mode",
+  "auto": [
+   "\\.ltx\\Z",
+   "\\.sty\\Z",
+   "\\.cl[os]\\Z",
+   "\\.bbl\\Z"
+  ],
+  "interpreters": [],
+  "source": "tex-mode",
+  "emacs": "31.1"
+ },
+ "ld-script-mode": {
+  "title": "LD-Script",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.ld[is]?\\Z",
+   "ld\\.?script\\Z",
+   "\\.x[abdrsu]?[cnw]?\\Z"
+  ],
+  "interpreters": [],
+  "source": "ld-script",
+  "emacs": "31.1"
+ },
+ "lisp-data-mode": {
+  "title": "Lisp-Data",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.dir\\-locals(?:\\-2)?\\.el\\Z",
+   "\\.eld\\Z",
+   "eww\\-bookmarks\\Z",
+   "tramp\\Z",
+   "/archive\\-contents\\Z",
+   "places\\Z",
+   "\\.emacs\\-places\\Z"
+  ],
+  "interpreters": [],
+  "source": "lisp-mode",
+  "emacs": "31.1"
+ },
+ "lisp-mode": {
+  "title": "Lisp",
+  "parent": "lisp-data-mode",
+  "auto": [
+   "\\.l\\Z",
+   "\\.li?sp\\Z",
+   "\\.ml\\Z",
+   "\\.asd\\Z"
+  ],
+  "interpreters": [
+   "clisp"
+  ],
+  "source": "lisp-mode",
+  "emacs": "31.1"
+ },
+ "lua-mode": {
+  "title": "Lua",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.lua\\Z"
+  ],
+  "interpreters": [
+   "lua"
+  ],
+  "source": "lua-mode",
+  "emacs": "31.1"
+ },
+ "m4-mode": {
+  "title": "m4",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.m[4c]\\Z"
+  ],
+  "interpreters": [],
+  "source": "m4-mode",
+  "emacs": "31.1"
+ },
+ "makefile-automake-mode": {
+  "title": "Makefile.am",
+  "parent": "makefile-mode",
+  "auto": [
+   "\\.am\\Z"
+  ],
+  "interpreters": [],
+  "source": "make-mode",
+  "emacs": "31.1"
+ },
+ "makefile-bsdmake-mode": {
+  "title": "BSDmakefile",
+  "parent": "makefile-mode",
+  "auto": [
+   "\\.mk\\Z",
+   "\\.make\\Z",
+   "[Mm]akefile\\Z"
+  ],
+  "interpreters": [],
+  "source": "make-mode",
+  "emacs": "31.1"
+ },
+ "makefile-gmake-mode": {
+  "title": "GNUmakefile",
+  "parent": "makefile-mode",
+  "auto": [
+   "GNUmakefile\\Z"
+  ],
+  "interpreters": [
+   "make"
+  ],
+  "source": "make-mode",
+  "emacs": "31.1"
+ },
+ "makefile-mode": {
+  "title": "Makefile",
+  "parent": "prog-mode",
+  "auto": [],
+  "interpreters": [],
+  "source": "make-mode",
+  "emacs": "31.1"
+ },
+ "nroff-mode": {
+  "title": "Nroff",
+  "parent": "text-mode",
+  "auto": [
+   "\\.m[ems]\\Z",
+   "\\.man\\Z",
+   "\\.[1-9]\\Z"
+  ],
+  "interpreters": [],
+  "source": "nroff-mode",
+  "emacs": "31.1"
+ },
+ "octave-mode": {
+  "title": "Octave",
+  "parent": "prog-mode",
+  "auto": [],
+  "interpreters": [
+   "octave"
+  ],
+  "source": "octave",
+  "emacs": "31.1"
+ },
+ "pascal-mode": {
+  "title": "Pascal",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.p\\Z",
+   "\\.pas\\Z"
+  ],
+  "interpreters": [],
+  "source": "pascal",
+  "emacs": "31.1"
+ },
+ "perl-mode": {
+  "title": "Perl",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.([Pp]([Llm]|erl|od)|al)\\Z"
+  ],
+  "interpreters": [
+   "(mini)?perl5?"
+  ],
+  "source": "perl-mode",
+  "emacs": "31.1"
+ },
+ "plain-tex-mode": {
+  "title": "TeX",
+  "parent": "text-mode",
+  "auto": [],
+  "interpreters": [],
+  "source": "tex-mode",
+  "emacs": "31.1"
+ },
+ "prolog-mode": {
+  "title": "Prolog",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.prolog\\Z"
+  ],
+  "interpreters": [],
+  "source": "prolog",
+  "emacs": "31.1"
+ },
+ "python-mode": {
+  "title": "Python",
+  "parent": "prog-mode",
+  "auto": [
+   "(?:\\.(?:p(?:th|y[iw]?))|/(?:SCons(?:(?:crip|truc)t)))\\Z"
+  ],
+  "interpreters": [
+   "python[.0-9]*"
+  ],
+  "source": "python",
+  "emacs": "31.1"
+ },
+ "rst-mode": {
+  "title": "ReST",
+  "parent": "text-mode",
+  "auto": [
+   "\\.re?st\\Z"
+  ],
+  "interpreters": [],
+  "source": "rst",
+  "emacs": "31.1"
+ },
+ "ruby-mode": {
+  "title": "Ruby",
+  "parent": "prog-mode",
+  "auto": [
+   "(?:\\.(?:rbw?|ru|rake|thor|axlsx|jbuilder|rabl|gemspec|podspec)|/(?:Gem|Rake|Cap|Thor|Puppet|Berks|Brew|Fast|Vagrant|Guard|Pod)file)\\Z"
+  ],
+  "interpreters": [
+   "j?ruby(?:[.0-9]+)",
+   "jruby",
+   "rbx",
+   "ruby"
+  ],
+  "source": "ruby-mode",
+  "emacs": "31.1"
+ },
+ "scheme-mode": {
+  "title": "Scheme",
+  "parent": "prog-mode",
+  "auto": [
+   "(?:\\.(?:scm|sls|sld|stk|ss|sch)|/\\.guile)\\Z",
+   "\\.scm\\.[0-9]*\\Z",
+   "\\.oak\\Z"
+  ],
+  "interpreters": [
+   "scm",
+   "guile"
+  ],
+  "source": "scheme",
+  "emacs": "31.1"
+ },
+ "sgml-mode": {
+  "title": "Sgml",
+  "parent": "text-mode",
+  "auto": [
+   "\\.sgml?\\Z",
+   "\\.dtd\\Z",
+   "\\.docbook\\Z"
+  ],
+  "interpreters": [],
+  "source": "sgml-mode",
+  "emacs": "31.1"
+ },
+ "sh-mode": {
+  "title": "Shell-script",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.[ckz]?sh\\Z|\\.shar\\Z|/\\.z?profile\\Z",
+   "\\.bash\\Z",
+   "/bash\\-fc\\.[0-9A-Za-z]{6}\\Z",
+   "\\A/etc/profile\\Z",
+   "/PKGBUILD\\Z",
+   "(/|\\A)\\.(bash_(profile|history|log(in|out))|z?log(in|out))\\Z",
+   "(/|\\A)\\.(shrc|zshrc|m?kshrc|bashrc|t?cshrc|esrc)\\Z",
+   "(/|\\A)\\.([kz]shenv|xinitrc|startxrc|xsession)\\Z",
+   "\\.m?spec\\Z"
+  ],
+  "interpreters": [
+   "[acjkwz]sh",
+   "r?bash2?",
+   "dash",
+   "mksh",
+   "(dt|pd|w)ksh",
+   "es",
+   "i?tcsh",
+   "oash",
+   "rc",
+   "rpm",
+   "sh5?"
+  ],
+  "source": "sh-script",
+  "emacs": "31.1"
+ },
+ "sql-mode": {
+  "title": "SQL[ANSI]",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.sql\\Z"
+  ],
+  "interpreters": [],
+  "source": "sql",
+  "emacs": "31.1"
+ },
+ "tcl-mode": {
+  "title": "Tcl",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.i?tcl\\Z",
+   "\\.exp\\Z",
+   "\\.itk\\Z"
+  ],
+  "interpreters": [
+   "wishx?",
+   "tcl(sh)?",
+   "expect"
+  ],
+  "source": "tcl",
+  "emacs": "31.1"
+ },
+ "texinfo-mode": {
+  "title": "Texinfo",
+  "parent": "text-mode",
+  "auto": [
+   "\\.texinfo\\Z",
+   "\\.te?xi\\Z"
+  ],
+  "interpreters": [],
+  "source": "texinfo",
+  "emacs": "31.1"
+ },
+ "verilog-mode": {
+  "title": "Verilog",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.[ds]?va?h?\\Z"
+  ],
+  "interpreters": [],
+  "source": "verilog-mode",
+  "emacs": "31.1"
+ },
+ "vhdl-mode": {
+  "title": "Vhdl",
+  "parent": "prog-mode",
+  "auto": [
+   "\\.vhdl?\\Z"
+  ],
+  "interpreters": [],
+  "source": "vhdl-mode",
+  "emacs": "31.1"
+ }
+}
