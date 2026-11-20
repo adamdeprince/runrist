@@ -20,4 +20,4 @@ statement and patched in place, so redefining a function, a class or a key
 binding takes effect at once, in every place that already refers to it.
 """
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
