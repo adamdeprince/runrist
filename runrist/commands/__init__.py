@@ -2,4 +2,4 @@
 """The standard commands.  Importing this package defines them and their keys."""
 
 from . import basic, files, windows, misc, prog, folding, registers  # noqa: F401
-from .. import search, kmacro, pyeval, minimap, help  # noqa: F401,E402
+from .. import search, kmacro, pyeval, minimap, help, ai  # noqa: F401,E402

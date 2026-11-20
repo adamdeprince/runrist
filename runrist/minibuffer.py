@@ -64,6 +64,10 @@ class Table:
         self.require_match = require_match
         self.sort = sort
 
+    def revision(self):
+        """Cache key for candidates supplied by live configuration."""
+        return None
+
     def split(self, text):
         """``(base, pattern)``: the part of the input that is kept as is, and
         the part matched against candidates."""
@@ -224,7 +228,7 @@ class Session:
         text = self.buffer.string()
         if self.table is None:
             return []
-        key = (text, len(histories[self.history]) if self.history else 0)
+        key = (text, self.table.revision(), len(histories[self.history]) if self.history else 0)
         if key == self._key:
             return self._candidates
         ed = _ed()

@@ -19,6 +19,9 @@ def parse(argv):
     parser.add_argument('-Q', '--quick', action='store_true', help='do not load init.py')
     parser.add_argument('-e', '--eval', action='append', default=[], metavar='CODE',
                         help='evaluate Python CODE after start-up; may be repeated')
+    parser.add_argument('--provider', '--ai-provider', help='use this AI profile from init.py')
+    parser.add_argument('--model', '--ai-model', help='override the selected provider’s model')
+    parser.add_argument('--effort', '--ai-effort', help='override its reasoning effort')
     parser.add_argument('--version', action='version', version=f'runrist {__version__}')
     return parser.parse_args(argv)
 
@@ -58,7 +61,8 @@ def main(argv=None):
         return 2
     startup.define_everything()
     from .editor import ed
-    from .errors import ExitEditor
+    from .errors import EditorError, ExitEditor
+    from .ai_profiles import apply_launch_options
     loop = asyncio.new_event_loop()
     tty = Tty(loop)
     ed.setup(tty)
@@ -73,12 +77,18 @@ def main(argv=None):
     for name in ('SIGTERM', 'SIGHUP'):
         signal.signal(getattr(signal, name), leave)
 
+    option_error = None
     failure = None
     code = 0
     tty.start()
     try:
         if not args.quick:
             startup.load_init_file()
+        try:
+            apply_launch_options(args)
+        except EditorError as error:
+            option_error = str(error)
+            raise ExitEditor(2) from None
         startup.after_init(args)
         if not visit(args.files):
             startup.splash()
@@ -95,7 +105,11 @@ def main(argv=None):
         code = 1
     finally:
         tty.stop()
+        from . import ai_process
+        ai_process.shutdown(loop)
         loop.close()
+    if option_error:
+        print(f'runrist: {option_error}', file=sys.stderr)
     if failure:
         print(failure, file=sys.stderr)
         print('runrist stopped on an internal error.  Unsaved file buffers were auto-saved; '

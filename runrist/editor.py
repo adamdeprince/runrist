@@ -89,6 +89,7 @@ class _MacroFrame:
 
 class Editor:
     def __init__(self):
+        self.ai_overrides = {}
         self.buffers = []
         self.current_buffer = None
         self.frame = None

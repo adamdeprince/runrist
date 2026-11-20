@@ -2,6 +2,8 @@
 """Bringing the editor up: defining everything, and loading the user's own code."""
 
 import os
+import tempfile
+from pathlib import Path
 
 from . import files, live
 
@@ -36,9 +38,25 @@ def init_file():
 
 
 def load_init_file(path=None):
-    """Load the user's ``init.py``, if there is one.  Returns the report or None."""
+    """Load init.py, installing the editable starter on the first normal launch."""
     from .editor import ed
-    path = path or init_file()
+    if path is None:
+        path = init_file()
+        if not os.path.lexists(path):
+            from .ai_profiles import starter_init
+            directory = Path(path).parent
+            try:
+                directory.mkdir(mode=0o700, parents=True, exist_ok=True)
+                with tempfile.NamedTemporaryFile(dir=directory) as staged:
+                    staged.write(starter_init().encode('utf-8'))
+                    staged.flush()
+                    # Publish a complete file without replacing a concurrent first launch.
+                    os.link(staged.name, path)
+            except FileExistsError:
+                pass
+            except OSError as error:
+                ed.message(f'Could not create {path}: {error.strerror}')
+                return None
     if not os.path.isfile(path):
         return None
     _, report = live.load_file(path, 'runrist_init')

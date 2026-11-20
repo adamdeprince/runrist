@@ -48,7 +48,7 @@ class Page:
     def link(self, text, action):
         return self.add(text, 'link', action)
 
-    def show(self, name='*Help*'):
+    def show(self, name='*Help*', *, select=False):
         buffer = ed.get_buffer(name) or ed.new_buffer(name, 'help-mode')
         if buffer.major_mode is None or buffer.major_mode.name != 'help-mode':
             from .mode import set_major_mode
@@ -69,7 +69,7 @@ class Page:
         buffer.read_only = True
         buffer.set_modified(False)
         buffer.goto_char(0)
-        window = ed.display_buffer(buffer)
+        window = ed.display_buffer(buffer, select=select)
         window.pointm.set(0)
         window.start.set(0)
         window.start_row = 0
@@ -474,7 +474,7 @@ def find_function(name):
 for _keys, _name in (
         ('k', 'describe-key'), ('c', 'describe-key-briefly'), ('f', 'describe-function'),
         ('x', 'describe-function'), ('v', 'describe-variable'), ('b', 'describe-bindings'),
-        ('m', 'describe-mode'), ('a', 'apropos-command'), ('w', 'where-is-command'),
+        ('m', 'describe-mode'), ('a', 'apropos-command'), ('A', 'ai-help'), ('w', 'where-is-command'),
         ('e', 'view-echo-area-messages'), ('l', 'view-lossage'), ('?', 'help-for-help'),
         ('C-h', 'help-for-help')):
     help_map.bind(_keys, _name)

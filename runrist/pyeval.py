@@ -234,6 +234,11 @@ def _after_save():
     if not b.filename or not b.filename.endswith('.py'):
         return
     if live.tracked(b.filename) is None:
+        # A first init file opened for configuration did not exist at startup.
+        if b.filename == b.locals.get('user_init_file'):
+            _, report = live.load_file(b.filename, 'runrist_init')
+            _announce(report)
+            return
         module = live.module_for_path(b.filename)
         if module is None:
             return

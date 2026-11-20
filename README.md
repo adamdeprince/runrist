@@ -96,6 +96,135 @@ opens it; moving by line steps over it.
 `M-x load-theme`.  Faces carry weights from 100 to 900 and font roles, which
 Silkie draws; elsewhere a heavy weight is bold.
 
+## AI in the editor
+
+Press **`C-h A`** (`M-x ai-help`) to see your current AI selection and
+configured profiles. From an AI transcript or review buffer, press `?`.
+Use `M-x ai-select-provider` to switch profiles for this run, or
+[`M-x ai-configure` to change your settings](#configure-ai).
+
+| Command | What it does |
+| --- | --- |
+| `ai-complete` | Suggest an insertion at point. `C-c RET` accepts the full suggestion. `ai-preview-completion` opens the full diff. |
+| `ai-completion-mode` | Request suggestions after a pause in typing in this buffer. |
+| `ai-rewrite` | Send the selected region and an instruction. Review the proposed replacement with `a` or `r`. |
+| `ai-chat` | Attach the active region, or the accessible buffer if no region is active, and ask a question. Type `i` in the transcript for a follow-up without reattaching the source. |
+| `ai-delegate` | Give the AI a project task. It can list directories, read file buffers, propose replacements or new files, and ask to run commands. |
+| `ai-start` | Open a fresh conversation with the selected AI. |
+| `ai-cancel` | Cancel a request, pending action, or suggestion in its buffer. In a transcript or review buffer, press `k`. |
+
+Delegated work starts in the enclosing Git repository or the buffer's
+directory. The transcript shows the directory, tool requests, and results.
+Review each edit or command before accepting it. Accepted edits enter the
+target buffer with normal undo. Save the buffer to write the changes and
+trigger the usual live reload. Commands run locally with your account's
+permissions and see files as saved on disk. A proposal expires if its source
+changes. You can keep editing while a backend is working.
+
+### Configure AI
+
+1. Run `M-x ai-configure` to visit your personal `~/.config/runrist/init.py`
+   (or `$XDG_CONFIG_HOME/runrist/init.py`). The first normal launch creates
+   this file from the [starter init.py](runrist/templates/init.py) if it is missing.
+2. Set `ai_backend` to the **menu name** you want at startup. For example,
+   with `from runrist.api import setq` in the file, use `setq(ai_backend='codex')`.
+   The starter `claude` and `codex` entries use their respective command-line
+   clients. Install the client you want, make its executable available on
+   Runrist's `PATH`, and use `M-x ai-login` to sign in.
+3. Save with `C-x C-s`. Run `M-x ai-select-backend` to see the updated menu.
+   To try a profile, open a scratch buffer and run `M-x ai-chat`. If a request
+   fails, `C-h e` opens `*Messages*` with the error.
+
+**Sign-in and account status.** Open `C-h A` and follow **Sign in to Claude
+or Codex** (`M-x ai-login`) or **Check sign-in status** (`M-x ai-auth-status`).
+Choose the profile whose account you want to manage. Your selected AI for
+editing stays the same. Runrist gives the terminal to that profile's CLI.
+Follow its instructions, then press Return to resume editing.
+
+| Client | Sign-in choices |
+| --- | --- |
+| Claude Code | Claude subscription, Anthropic Console, or single sign-on. |
+| Codex | Browser sign-in, a device code for use in another browser, or an API key from the `OPENAI_API_KEY` environment variable. |
+
+The CLI manages the credentials used for subsequent requests. For Codex
+API key login, set the variable in the environment that launches Runrist.
+The helper passes its value to Codex on standard input. The same account
+helpers work with renamed profiles or absolute paths to `claude` and `codex`.
+HTTP profiles use the `token_file` setting described below.
+
+**Select provider, model, and effort.** In the editor, use
+`M-x ai-select-provider`, `M-x ai-select-model`, and `M-x ai-select-effort`,
+or follow their links in `C-h A`. The model picker accepts an exact model ID
+as well as names from the profile's `models` list. Choose `(profile default)`
+to clear an override. Selections apply to subsequent requests and each
+provider remembers its own settings for the current run.
+
+From the shell, for example:
+
+```sh
+runrist --provider codex --model "$MODEL_ID" --effort high project.py
+```
+
+From the editor's Python console (`M-:`), use
+`select_ai('codex', model='your-model-id', effort='high')`.
+To make a choice permanent, edit the profile's `model` and `effort` in
+`init.py` and set `ai_backend` to its name. With neither option set, a
+command profile uses the client's own defaults.
+
+Each entry in `setq(ai_backends={...})` defines one provider in the picker.
+Edit the Claude and Codex entries directly, or add entries to that dictionary:
+
+```python
+    'writing': {
+        'url': 'https://inference.example/v1/chat/completions',
+        'model': 'your-server-model',
+        'efforts': ['low', 'high'],
+        'mode_efforts': {'completion': 'low'},
+    },
+    'local-command': {
+        'command': ['my-assistant', '--print'],
+        'model_args': ['--model', '{value}'],
+        'effort_args': ['--effort', '{value}'],
+    },
+```
+
+A **command** profile runs its argument list directly. The optional
+`model_args` and `effort_args` append arguments when a value is set.
+`{value}` inserts the literal value and `{quoted_value}` a JSON-quoted
+string for clients that parse a configuration expression. The starter file
+also defines each CLI’s login choices and status command. A plain argument
+list still works for commands that only need stdin and stdout.
+
+An **HTTP** entry requires the full streaming
+Chat Completions `url` and the server's `model` ID. Two menu entries can use
+the same URL with different models or instructions. HTTP profiles also accept
+the following settings.
+
+| Setting | When to use it |
+| --- | --- |
+| `token_file` | For bearer authentication, give the path to a private file containing the token, e.g. `'~/.config/runrist/inference.token'`. |
+| `system` | Set instructions for this profile, e.g. `'Preserve the author’s voice.'`. |
+| `options` | Supply model request parameters such as `{'temperature': 0.5}`. |
+| `models` | Suggested model IDs for the console picker. |
+| `efforts` | Allowed effort names, sent as `reasoning_effort`, or a dictionary mapping names to server-specific request options. |
+| `mode_efforts` | Choose a configured effort for `completion`, `rewrite`, `chat`, or `delegate`. An explicit console effort takes precedence. |
+| `mode_options` | Override parameters by mode, e.g. `{'completion': {'temperature': 0}}`. The keys are `completion`, `rewrite`, `chat`, and `delegate`. |
+| `structured_outputs` | Set to `True` if the endpoint supports JSON Schema for edits and JSON objects for delegation. |
+| `gzip` | Set to `True` if the endpoint accepts gzip-compressed requests. Runrist reuses HTTP connections between prompts. |
+
+For automatic suggestions, enable `M-x ai-completion-mode` in the buffer.
+`setq(ai_completion_delay=0.7)` sets the typing pause in seconds. Changing
+profiles from a transcript with `b` starts a fresh conversation with the new
+profile. The previous transcript remains available through `C-x b`.
+
+For a loopback inference server on a private VPN, [the optional Go
+gateway](tools/ai-gateway/main.go) forwards the model list and streaming
+chat endpoints. Build it with `go build tools/ai-gateway/main.go` and run
+`./main -help` for its arguments. Bind to the VPN interface and specify
+the client VPN address, upstream origin, and a private bearer-token file.
+The VPN encrypts the connection. Only the gateway handles compressed request
+bodies, so the inference server can keep its existing configuration.
+
 ## Making it yours
 
 `~/.config/runrist/init.py` is loaded at start-up, and reloaded as you save

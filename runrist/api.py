@@ -36,6 +36,12 @@ from .mode import (add_auto_mode, major_mode, minor_mode, minor_mode_enabled,
 from .variables import (add_hook, defhook, defvar, remove_hook, run_hooks, setq, v)
 
 
+def select_ai(provider, **settings):
+    """Select the AI provider and optional model and effort for this editor run."""
+    from .ai import select_ai as select
+    return select(provider, **settings)
+
+
 def current_buffer():
     return ed.current_buffer
 

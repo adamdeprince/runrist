@@ -20,7 +20,7 @@ screen lines, all go through that one function.
 from bisect import bisect_left, bisect_right
 
 from . import faces, fold, fontlock
-from .chars import clip, text_width
+from .chars import clip, escape_of, text_width
 from .variables import defvar
 
 defvar('truncate_lines', False,
@@ -435,6 +435,7 @@ class Display:
         self.geometry(w)
         w.cursor = None
         w.rows = []
+        w.ghost_cells = None
         default = faces.style()
         if w.body_h > 0 and w.text_w >= 2:
             try:
@@ -515,6 +516,9 @@ class Display:
         end_y = w.y + height
         blank_tail = [(s_default, ' ' * w.minimap_w)] if w.minimap_w else []
 
+        from .ai import ghost
+        suggestion = ghost(buf) if selected else None
+
         while y < end_y:
             if line > last_line:
                 self._put(y, [(s_default, ' ' * (gutter_w + text_w)), *blank_tail])
@@ -568,7 +572,21 @@ class Display:
                 b = max(a, min(b, hi))
                 if lead:
                     runs.append((base, ' ' * lead))
-                used = lead + self._text_runs(runs, ltext, info, info.spans, layers, a, b, base)
+                if suggestion and on_point and r == prow and a <= pc <= b and not folded:
+                    used = lead + self._text_runs(runs, ltext, info, info.spans, layers, a, pc, base)
+                    first, newline, _ = suggestion.text.partition('\n')
+                    preview = ''.join((escape_of(c) or c) if c != '\t' else '⇥' for c in first)
+                    piece, cells = clip(preview + ('↵' if newline else ''), width - used)
+                    if cells:
+                        w.ghost_cells = y, w.text_x + used, cells
+                        runs.append((merge(base, 'shadow'), piece))
+                    used += cells
+                    rest = []
+                    self._text_runs(rest, ltext, info, info.spans, layers, pc, b, base)
+                    runs.extend(fit(rest, width - used, base))
+                    used = width
+                else:
+                    used = lead + self._text_runs(runs, ltext, info, info.spans, layers, a, b, base)
                 if folded and last_row and used < width:
                     badge, cells = clip(f' ⋯ {folded[1] - folded[0] + 1} lines ', width - used)
                     runs.append((s_fold, badge))
@@ -792,5 +810,11 @@ class Display:
         info = buf.line_info(line)
         truncate = bool(buf.get('truncate_lines'))
         origin = w.hscroll if truncate else self._col(info, a)
+        if w.ghost_cells and y == w.ghost_cells[0]:
+            _, start, cells = w.ghost_cells
+            if start <= x < start + cells:
+                return w, 'text', buf.pt
+            if x >= start + cells:
+                x -= cells
         index = buf.column_to_index(line, origin + (x - w.text_x))
         return w, 'text', buf.clamp(bol + max(a, min(index, b)))
